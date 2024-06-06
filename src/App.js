@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import "./style.css";
-import { Ground } from "./Ground";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { Ground } from "./Ground";
+import { Car } from "./Car";
 
 function CarShow() {
   return (
@@ -13,6 +14,8 @@ function CarShow() {
 
     {/* let color = new Color(0, 0, 0); */}
     <color args={[0, 0, 0]} attach="background"/>
+
+    <Car/>
 
     {/* let spotlight = new SpotLight();
     spotlight.intensity = 1.5;

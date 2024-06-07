@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import { Mesh } from "three";
+import { Color, Mesh } from "three";
 
 export function Car() {
     const gltf = useLoader(
@@ -9,19 +9,28 @@ export function Car() {
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
     );
 
+    // Refs for headlights to add SpotLights
+    const leftHeadlightRef = useRef();
+    const rightHeadlightRef = useRef();
+
     // Position Car in space
     useEffect(() => {
         gltf.scene.scale.set(0.5, 0.5, 0.5);
-        gltf.scene.position.set(0, .22, 0);
+        gltf.scene.position.set(0, 0.22, 0);
         gltf.scene.rotation.set(0, -1.5, 0);
         gltf.scene.traverse((object) => {
             if (object instanceof Mesh) {
                 object.castShadow = true;
                 object.receiveShadow = true;
                 object.material.envMapIntensity = 20;
+
+                // Set emissive color for headlight bulbs to white (or another desired color)
+                if (object.name.includes("HeadLights_Up")) { // Adjust the name as per your model
+                    object.material.emissive = new Color(0xffffff); // White color for emissive
+                }
             }
         });
-    });
+    }, [gltf]);
 
     //Animation Controls
     useFrame((state, delta) => {
@@ -36,7 +45,7 @@ export function Car() {
 
         // Animate headlights
         /* let headlights = gltf.scene.children[3];
-        headlights.children[4].rotation.y = t*2; // Lightsbulbs */
+        headlights.children[4].rotation.y = t*2; // Lightbulbs */
 
         let turningLights = gltf.scene;
         turningLights.children[4].rotation.y = t * 2; // Left
@@ -51,7 +60,7 @@ export function Car() {
 
         // HeadLights
         let headlight = gltf.scene;
-        headlight.children[2].rotation.y = t*2
+        headlight.children[2].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5;
 
         
 
@@ -59,5 +68,25 @@ export function Car() {
         
     });
 
-    return <primitive object={gltf.scene}/>
+    return (
+        <group>
+            <primitive object={gltf.scene} />
+            <spotLight
+                ref={leftHeadlightRef}
+                position={[1, 1, 1]} // Adjust to the actual headlight position
+                angle={0.3}
+                intensity={5}
+                distance={10}
+                castShadow
+            />
+            <spotLight
+                ref={rightHeadlightRef}
+                position={[-1, 1, 1]} // Adjust to the actual headlight position
+                angle={0.3}
+                intensity={5}
+                distance={10}
+                castShadow
+            />
+        </group>
+    );
 }

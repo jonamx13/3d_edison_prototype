@@ -31,11 +31,6 @@ export function Car() {
         wheels.children[9].rotation.z = t*2; // Front_Left
         wheels.children[10].rotation.z = t*2; // Front_Right
         
-        
-    /* group.children[0].rotation.x = t * 2;
-        group.children[2].rotation.x = t * 2;
-        group.children[4].rotation.x = t * 2;
-        group.children[6].rotation.x = t * 2; */
     });
 
     return <primitive object={gltf.scene}/>

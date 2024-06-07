@@ -9,7 +9,7 @@ export function GroundGrid(){
         diffuse.wrapS = RepeatWrapping;
         diffuse.wrapT = RepeatWrapping;
         diffuse.anisotropy = 4;
-        diffuse.repeat.set(50, 50);
+        diffuse.repeat.set(150, 150);
         diffuse.offset.set(0, 0);
     }, [diffuse]);
 

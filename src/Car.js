@@ -25,8 +25,13 @@ export function Car() {
                 object.material.envMapIntensity = 20;
 
                 // Set emissive color for headlight bulbs to white
+                
                 if (object.name.includes("HeadLights_Up")) { // Adjust the name as per your model
                     object.material.emissive = new Color(0xffffff); // White color for emissive
+                }
+                // Set emissive color for headlight bulbs to white
+                if (object.name.includes("Directional_Light_Right")) { // Adjust the name as per your model
+                    object.material.emissive = new Color(0xFF0000); // White color for emissive
                 }
             }
         });
@@ -45,9 +50,9 @@ export function Car() {
         wheels.children[9].rotation.z = t*-2; // Front_Right
         
 
-        /* let turningLights = gltf.scene;
-        turningLights.children[4].rotation.y = t * 2; // Left
-        turningLights.children[5].rotation.y = t * 2; // Right */
+        let turningLights = gltf.scene;
+        turningLights.children[4].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5; // Left
+        turningLights.children[5].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5; // Right
         
 
         /* // Doors

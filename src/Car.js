@@ -55,12 +55,12 @@ export function Car() {
         turningLights.children[5].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5; // Right
         
 
-        /* // Doors
+        // Doors
         let doors = gltf.scene; // Back_Left
-        doors.children[0].rotation.y = t*2 // Front_Left
-        doors.children[1].rotation.y = t*2; // Back_Left
-        doors.children[6].rotation.y = t*2; // Front_Right
-        doors.children[7].rotation.y = t*2; // Back_Right */
+        doors.children[0].rotation.y = -0.5; // Front_Left
+        doors.children[1].rotation.y = -0.5; // Back_Left
+        doors.children[6].rotation.y = 0.5; // Front_Right
+        doors.children[7].rotation.y = 0.5; // Back_Right
         
         // HeadLights
         let headlight = gltf.scene;

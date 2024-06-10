@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { Color, Mesh, SpotLight } from "three";
 
-export function Car({ wheelRotationSpeed, directionalLights, headLights }) {
+export function Car({ wheelRotationSpeed, directionalLights, headLights, turningMove }) {
     const gltf = useLoader(
         GLTFLoader,
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
@@ -37,7 +37,7 @@ export function Car({ wheelRotationSpeed, directionalLights, headLights }) {
         });
     }, [gltf]);
 
-    //Animation Controlster
+    //Animation Controlers
     useFrame((state) => {
         let t = state.clock.getElapsedTime();
 
@@ -55,6 +55,8 @@ export function Car({ wheelRotationSpeed, directionalLights, headLights }) {
             wheels.children[index].rotation.z = t * -wheelRotationSpeed;
         }
         
+        wheels.children[8].rotation.y = turningMove; // TODO: Adjust range from -0.5 to 0.5
+        wheels.children[9].rotation.y = turningMove;
 
         // Turning Lights
         

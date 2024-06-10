@@ -25,6 +25,7 @@ function CarShow() {
     wheelRotationSpeed={speed}
     directionalLights={'blinker'}
     headLights={'high'}
+    turningMove={-0.5} // TODO: Make it analog
     />
 
     <GroundGrid

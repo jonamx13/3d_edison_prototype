@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { Color, Mesh, SpotLight } from "three";
 
-export function Car({ wheelRotationSpeed }) {
+export function Car({ wheelRotationSpeed, directionalLights }) {
     const gltf = useLoader(
         GLTFLoader,
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
@@ -37,13 +37,13 @@ export function Car({ wheelRotationSpeed }) {
         });
     }, [gltf]);
 
-    //Animation Controls
+    //Animation Controlster
     useFrame((state) => {
         let t = state.clock.getElapsedTime();
 
         
         // Rotate wheels
-        let wheels = gltf.scene.children[3];
+        const wheels = gltf.scene.children[3];
         const wheelMap = new Map([
             ['Back_Left', 6],
             ['Back_Right', 7],
@@ -57,11 +57,30 @@ export function Car({ wheelRotationSpeed }) {
         
 
         // Turning Lights
-        let turningLights = gltf.scene;
-        turningLights.children[4].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5; // Left
-        turningLights.children[5].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5; // Right
         
-
+        let leftDirectionalLight = gltf.scene.children[4];
+        let rightDirectionalLight = gltf.scene.children[5];
+        const turnedOFF = 0;
+        const blinking = Math.sin (t*12) * (0.5 * 5) + (0.5 * 5);
+        
+        switch(directionalLights) {
+            case 'blinker':
+                leftDirectionalLight.material.emissiveIntensity = blinking;
+                rightDirectionalLight.material.emissiveIntensity = blinking;
+                break;
+            case 'left':
+                leftDirectionalLight.material.emissiveIntensity = blinking;
+                rightDirectionalLight.material.emissiveIntensity = turnedOFF;
+                break;
+            case 'right':
+                leftDirectionalLight.material.emissiveIntensity = turnedOFF;
+                rightDirectionalLight.material.emissiveIntensity = blinking;
+                break;
+            default:
+                leftDirectionalLight.material.emissiveIntensity = turnedOFF;
+                rightDirectionalLight.material.emissiveIntensity= turnedOFF;
+        }
+        
         // Doors
         let doors = gltf.scene;
         doors.children[0].rotation.y = -0.5; // Front_Left
@@ -96,7 +115,6 @@ export function Car({ wheelRotationSpeed }) {
                 distance={10}
                 castShadow
             />
-
         </group>
     );
 }

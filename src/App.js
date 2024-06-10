@@ -22,7 +22,8 @@ function CarShow() {
     <color args={[0, 0, 0]} attach="background"/>
 
     <Car
-    wheelRotationSpeed={speed}/>
+    wheelRotationSpeed={speed}
+    directionalLights={'blinker'}/>
     <GroundGrid
     speed={speed}/>
 

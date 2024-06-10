@@ -1,60 +1,66 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import * as THREE from "three";
-import { extend } from "@react-three/fiber";
+import { extend, useThree, useFrame } from "@react-three/fiber";
+import CustomShaders from './CustomShaders.glsl'
 
-extend({ ConeGeometry: THREE.ConeGeometry });
+// Extend the namespace to include ShaderMaterial
+extend({ ShaderMaterial: THREE.ShaderMaterial });
 
+// Split shader code into vertex and fragment shaders
+const [vertexShader, fragmentShader] = CustomShaders.split("// Fragment shader");
+
+/**
+ * VolumetricLightMaterial component represents the shader material used for volumetric light effect.
+ * It creates a material with vertex and fragment shaders.
+ */
 const VolumetricLightMaterial = () => {
-  return new THREE.ShaderMaterial({
-    uniforms: {
+  const { viewport } = useThree();
+
+  // Create material with vertex and fragment shaders
+  const material = useMemo(() => {
+    const uniforms = {
       lightPosition: { value: new THREE.Vector3() },
-      color: { value: new THREE.Color(0xffffff) },
-      intensity: { value: 1.0 },
-      decay: { value: 0 },
-      opacity: { value: 1 }, // Add opacity uniform
-    },
-    vertexShader: `
-      varying vec3 vWorldPosition;
-      void main() {
-        vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-        vWorldPosition = worldPosition.xyz;
-        gl_Position = projectionMatrix * viewMatrix * worldPosition;
-      }
-    `,
-    fragmentShader: `
-      uniform vec3 lightPosition;
-      uniform vec3 color;
-      uniform float intensity;
-      uniform float decay;
-      uniform float opacity; // Add opacity uniform
-      varying vec3 vWorldPosition;
-      void main() {
-        float distance = length(lightPosition - vWorldPosition);
-        float attenuation = pow(1.0 / (distance * distance), decay);
-        gl_FragColor = vec4(color * intensity * attenuation, opacity);
-      }
-    `,
-    transparent: true,
-    depthWrite: false,
+      viewportSize: { value: new THREE.Vector2(viewport.width, viewport.height) },
+      time: { value: 0 },
+    };
+
+    return new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader,
+      fragmentShader,
+      transparent: true,
+    });
+  }, [viewport]);
+
+  // Update material on viewport or time change
+  useEffect(() => {
+    material.needsUpdate = true;
+  }, [material]);
+
+  // Update time uniform in material every frame
+  useFrame(({ clock }) => {
+    material.uniforms.time.value = clock.elapsedTime;
   });
+
+  return material;
 };
 
-const VolumetricLight = ({ position, rotation, intensity}) => {
-  const material = useMemo(() => VolumetricLightMaterial(), []);
+/**
+ * VolumetricLight component renders a volumetric light effect at the specified position.
+ * It utilizes VolumetricLightMaterial for the shader effect.
+ * @param {Object} props - Component props
+ * @param {THREE.Vector3} props.position - The position of the volumetric light
+ * @returns {null} - Returns null as the volumetric light is rendered to a fullscreen quad
+ */
+const VolumetricLight = ({ position }) => {
+  const material = VolumetricLightMaterial();
 
+  // Update light position in material when position prop changes
   useEffect(() => {
     material.uniforms.lightPosition.value = position;
   }, [material, position]);
 
-  useEffect(() => {
-    material.uniforms.opacity.value = intensity;
-  }, [material, intensity]);
-
-  return (
-    <mesh position={position} rotation={rotation} material={material}>
-      <coneGeometry args={[0.5, 5, 32, 1, true]} />
-    </mesh>
-  );
+  return null; // Volumetric light is rendered to a fullscreen quad, so no visible component needed
 };
 
 export default VolumetricLight;

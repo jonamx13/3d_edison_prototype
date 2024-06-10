@@ -1,8 +1,7 @@
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import { Color, Mesh, Vector3, Euler } from "three";
-import VolumetricLight from "./CustomShaders/VolumetricLight";
+import { Color, Mesh, SpotLight } from "three";
 
 export function Car() {
     const gltf = useLoader(
@@ -64,17 +63,14 @@ export function Car() {
         
     });
 
-    const leftHeadlightPosition = new Vector3(0.42, 0.39, 2.0); // Adjust these values
-    const rightHeadlightPosition = new Vector3(-0.36, 0.39, 2.0); // Adjust these values
-
-    const headlightRotation = new Euler(-Math.PI / 2, 0, 0);
 
     return (
         <group>
             <primitive object={gltf.scene} />
+
             <spotLight
                 ref={leftHeadlightRef}
-                position={[1, 1, 1]} // Adjust to the actual headlight position
+                position={[1, 1, 1]}
                 angle={0.3}
                 intensity={5}
                 distance={10}
@@ -82,22 +78,13 @@ export function Car() {
             />
             <spotLight
                 ref={rightHeadlightRef}
-                position={[-1, 1, 1]} // Adjust to the actual headlight position
+                position={[-1, 1, 1]}
                 angle={0.3}
                 intensity={5}
                 distance={10}
                 castShadow
             />
-             <VolumetricLight
-             position={leftHeadlightPosition}
-             rotation={headlightRotation} 
-             intensity={1}
-             />
-             <VolumetricLight
-             position={rightHeadlightPosition}
-             rotation={headlightRotation}
-             intensity={1}
-             />
+
         </group>
     );
 }

@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { Color, Mesh, SpotLight } from "three";
 
-export function Car({ wheelRotationSpeed, directionalLights }) {
+export function Car({ wheelRotationSpeed, directionalLights, headLights }) {
     const gltf = useLoader(
         GLTFLoader,
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
@@ -89,8 +89,22 @@ export function Car({ wheelRotationSpeed, directionalLights }) {
         doors.children[7].rotation.y = 0.5; // Back_Right
         
         // Headlights
-        let headlight = gltf.scene;
-        headlight.children[2].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5;
+        let headlightBeam = gltf.scene.children[2];
+        const beamIntesity = {
+            'OFF' : 0,
+            'Low' : 1,
+            'High' : 5
+        }
+        switch(headLights) {
+            case 'low':
+                headlightBeam.material.emissiveIntensity = beamIntesity['Low'];
+                break;
+            case 'high':
+                headlightBeam.material.emissiveIntensity = beamIntesity['High'];
+                break;
+            default:
+                headlightBeam.material.emissiveIntensity = beamIntesity['OFF'];
+        }
         
     });
 

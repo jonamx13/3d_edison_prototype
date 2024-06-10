@@ -23,7 +23,10 @@ function CarShow() {
 
     <Car
     wheelRotationSpeed={speed}
-    directionalLights={'blinker'}/>
+    directionalLights={'blinker'}
+    headLights={'high'}
+    />
+
     <GroundGrid
     speed={speed}/>
 

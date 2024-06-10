@@ -4,7 +4,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { LinearEncoding } from "@react-three/drei/helpers/deprecated";
 import { RepeatWrapping, TextureLoader } from "three";
 
-export function Ground() {
+export function Ground({speed}) {
   // thanks to https://polyhaven.com/a/rough_plasterbrick_05 !
   const [roughness, normal] = useLoader(TextureLoader, [
     process.env.PUBLIC_URL + "textures/terrain-roughness.jpg",
@@ -21,8 +21,8 @@ export function Ground() {
     normal.encoding = LinearEncoding;
   }, [normal, roughness]);
 
-  useFrame((state, delta) => {
-    let t = -state.clock.getElapsedTime() * 0.128;
+  useFrame((state) => {
+    let t = -state.clock.getElapsedTime() * (speed / 2 * 0.128);
     roughness.offset.set(0, t);
     normal.offset.set(0, t);
   })

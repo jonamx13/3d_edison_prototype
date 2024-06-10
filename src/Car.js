@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { Color, Mesh, SpotLight } from "three";
 
-export function Car() {
+export function Car({ wheelRotationSpeed }) {
     const gltf = useLoader(
         GLTFLoader,
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
@@ -38,31 +38,38 @@ export function Car() {
     }, [gltf]);
 
     //Animation Controls
-    useFrame((state, delta) => {
+    useFrame((state) => {
         let t = state.clock.getElapsedTime();
 
         
         // Rotate wheels
         let wheels = gltf.scene.children[3];
-        wheels.children[6].rotation.z = t*-2; // Back_Left
-        wheels.children[7].rotation.z = t*-2; // Back_Right
-        wheels.children[8].rotation.z = t*-2; // Front_Left
-        wheels.children[9].rotation.z = t*-2; // Front_Right
+        const wheelMap = new Map([
+            ['Back_Left', 6],
+            ['Back_Right', 7],
+            ['Front_Left', 8],
+            ['Front_Right', 9]
+        ]);
+
+        for (const index of wheelMap.values()) {
+            wheels.children[index].rotation.z = t * -wheelRotationSpeed;
+        }
         
 
+        // Turning Lights
         let turningLights = gltf.scene;
         turningLights.children[4].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5; // Left
         turningLights.children[5].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5; // Right
         
 
         // Doors
-        let doors = gltf.scene; // Back_Left
+        let doors = gltf.scene;
         doors.children[0].rotation.y = -0.5; // Front_Left
         doors.children[1].rotation.y = -0.5; // Back_Left
         doors.children[6].rotation.y = 0.5; // Front_Right
         doors.children[7].rotation.y = 0.5; // Back_Right
         
-        // HeadLights
+        // Headlights
         let headlight = gltf.scene;
         headlight.children[2].material.emissiveIntensity = Math.sin(t * 2) * 0.5 + 0.5;
         

@@ -2,7 +2,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { useEffect } from "react";
 import { RepeatWrapping, TextureLoader } from "three";
 
-export function GroundGrid(){
+export function GroundGrid({speed}){
     const diffuse = useLoader(TextureLoader, process.env.PUBLIC_URL + "textures/grid-texture.png");
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export function GroundGrid(){
     }, [diffuse]);
 
     useFrame((state, delta) => {
-        let t = -state.clock.getElapsedTime() * 0.68;
+        let t = -state.clock.getElapsedTime() * (speed * 0.68);
         diffuse.offset.set(0, t);
     });
 

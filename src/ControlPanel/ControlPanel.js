@@ -30,18 +30,17 @@ function ControlPanel({
 }
 
 const styles = {
-  controlPanel: {
-    position: 'absolute',
-    top: '10px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    padding: '10px',
-    borderRadius: '5px',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-  }
-};
-
+    controlPanel: {
+      position: 'absolute',
+      top: '10px',
+      left: '10px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      padding: '10px',
+      borderRadius: '5px',
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+    }
+  };
 export default ControlPanel;

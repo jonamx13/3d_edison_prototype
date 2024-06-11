@@ -46,9 +46,7 @@ function ExternalEvents({ weather, openDoors, setOpenDoors }) {
 
 const styles = {
   controlPanel: {
-    position: 'absolute',
-    top: '10px',
-    left: '10px',
+    margin: '10px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

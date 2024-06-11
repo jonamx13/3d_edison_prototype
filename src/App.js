@@ -4,6 +4,7 @@ import './style.css'
 import CarShow from "./CarsShow";
 import ControlPanel from "./ControlPanel/ControlPanel";
 import ExternalEvents from './ExternalEvents/ExternalEvents'
+import DigitalUI from "./DigitalUI";
 
 function App() {
   const [acceleration, setAcceleration] = useState(0);
@@ -107,30 +108,31 @@ function App() {
         </Canvas>
       </Suspense>
 
-      <ControlPanel 
-      onSliderChangeSpeed={handleAcceleration}
-      sliderSpeedValue={acceleration}
+      <DigitalUI>
+        <ControlPanel 
+          onSliderChangeSpeed={handleAcceleration}
+          sliderSpeedValue={acceleration}
 
-      onSliderTurnMoveChange={handleTurnSliderMove}
-      sliderTurnMoveValue={turnMoveSlider}
+          onSliderTurnMoveChange={handleTurnSliderMove}
+          sliderTurnMoveValue={turnMoveSlider}
 
-      onHeadlightToggle={handleHeadlightToggle}
-      isHeadlightON={headlightsON}
+          onHeadlightToggle={handleHeadlightToggle}
+          isHeadlightON={headlightsON}
 
-      onBeamToggle={handleBeamToggle}
-      isBeamHIGH={HIGHBeam}
+          onBeamToggle={handleBeamToggle}
+          isBeamHIGH={HIGHBeam}
 
-      directionalLights={directionalLightsManager}
-      onTurnLeftToggle={handleTurnLeftToggle}
-      blinkerActiveToggle={handleBlinkerToggle}
-      onTurnRightToggle={handleTurnRightToggle}
-      />
-
-      <ExternalEvents
-        // weather={} //TODO: Integrate HDRI's and a weather API (Also a manual control to simulate the climate change)
-        openDoors={openDoors}
-        setOpenDoors={setOpenDoors}
-      />
+          directionalLights={directionalLightsManager}
+          onTurnLeftToggle={handleTurnLeftToggle}
+          blinkerActiveToggle={handleBlinkerToggle}
+          onTurnRightToggle={handleTurnRightToggle}
+        />
+        <ExternalEvents
+          // weather={} //TODO: Integrate HDRI's and a weather API (Also a manual control to simulate the climate change)
+          openDoors={openDoors}
+          setOpenDoors={setOpenDoors}
+        />
+      </DigitalUI>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import './style.css'
 import CarShow from "./CarsShow";
@@ -12,6 +12,7 @@ function App() {
   const [TurnLEFT, setTurnLEFT] = useState(false);
   const [BLINK, setBlinkerACTIVE] = useState(false);
   const [TurnRIGHT, setTurnRIGHT] = useState(false);
+  const [directionalLightsManager, setDirectionalLightsManager] = useState('');
 
   // Speed slider
   const handleAcceleration = (value) => {
@@ -45,6 +46,46 @@ function App() {
     setTurnRIGHT(prevState => !prevState);
   };
 
+  // Effect to handle BLINK logic
+  useEffect(() => {
+    if (BLINK) {
+      if (TurnLEFT) setTurnLEFT(false);
+      if (TurnRIGHT) setTurnRIGHT(false);
+    }
+  }, [BLINK]);
+
+  // Effect to handle TurnLEFT logic
+  useEffect(() => {
+    if (TurnLEFT && TurnRIGHT) {
+      setTurnRIGHT(false);
+    }
+  }, [TurnLEFT]);
+
+  // Effect to handle TurnRIGHT logic
+  useEffect(() => {
+    if (TurnRIGHT && TurnLEFT) {
+      setTurnLEFT(false);
+    }
+  }, [TurnRIGHT]);
+
+  // Effect to handle directionalLightsManager state
+  useEffect(() => {
+    switch (true) {
+      case BLINK:
+        setDirectionalLightsManager('blinker');
+        break;
+      case TurnLEFT:
+        setDirectionalLightsManager('left');
+        break;
+      case TurnRIGHT:
+        setDirectionalLightsManager('right');
+        break;
+      default:
+        setDirectionalLightsManager('');
+    }
+  }, [BLINK, TurnLEFT, TurnRIGHT]);
+
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
       <Suspense fallback={null}>
@@ -54,7 +95,7 @@ function App() {
           turningMove={turnMoveSlider}
           isheadLightsON={headlightsON}
           isheadlightBeamHIGH={HIGHBeam}
-          directionalLights={'blinker'}
+          directionalLights={directionalLightsManager}
           />
         </Canvas>
       </Suspense>
@@ -71,14 +112,10 @@ function App() {
       onBeamToggle={handleBeamToggle}
       isBeamHIGH={HIGHBeam}
 
+      directionalLights={directionalLightsManager}
       onTurnLeftToggle={handleTurnLeftToggle}
-      isturnLeftActive={TurnLEFT}
-
       blinkerActiveToggle={handleBlinkerToggle}
-      isBlinkerActive={BLINK}
-
       onTurnRightToggle={handleTurnRightToggle}
-      isTurnRightActive={TurnRIGHT}
       />
     </div>
   );

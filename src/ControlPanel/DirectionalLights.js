@@ -1,36 +1,56 @@
 import React from "react";
 
 function DirectionalLights({
+    directionalLightsManager,
     onTurnLeftToggle,
-    turnLeft,
-
     blinkerActiveToggle,
-    blinker,
-
-    onTurnRightToggle,
-    turnRight
+    onTurnRightToggle
 }) {
 
-// TODO: Behaviours for blinking when blinker is on and just turn on when selecting a direction
-    if(blinker) {
-        turnLeft = true;
-        turnRight = true;
-    } else {
-
+  const getButtonLabels = () => {
+    switch (directionalLightsManager) {
+      case 'blinker':
+        return {
+          left: 'L_Blink',
+          blinker: 'Blinker ON',
+          right: 'R_Blink',
+        };
+      case 'left':
+        return {
+          left: 'LEFT_ON',
+          blinker: 'Blinker OFF',
+          right: 'RIGHT_OFF',
+        };
+      case 'right':
+        return {
+          left: 'LEFT_OFF',
+          blinker: 'Blinker OFF',
+          right: 'RIGHT_ON',
+        };
+      default:
+        return {
+          left: 'LEFT_OFF',
+          blinker: 'Blinker OFF',
+          right: 'RIGHT_OFF',
+        };
     }
+  };
+
+  const { left, blinker, right } = getButtonLabels();
+  
     
     return(
         <div style={styles.buttonContainer}>
         <button onClick={onTurnLeftToggle} style={styles.button}>
-          {turnLeft ? 'LEFT_ON' : 'LEFT_OFF'}
+          {left}
         </button>
 
         <button onClick={blinkerActiveToggle} style={styles.button}>
-            {blinker ? 'blinker ON' : 'blinker OFF'}
+            {blinker}
         </button>
 
         <button onClick={onTurnRightToggle} style={styles.button}>
-          {turnRight ? 'RIGHT_ON' : 'RIGHT_OFF'}
+          {right}
         </button>
       </div>
     )

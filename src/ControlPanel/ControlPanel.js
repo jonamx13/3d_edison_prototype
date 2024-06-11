@@ -17,14 +17,10 @@ function ControlPanel({
   onBeamToggle,
   isBeamHIGH,
 
+  directionalLights,
   onTurnLeftToggle,
-  isturnLeftActive,
-
   blinkerActiveToggle,
-  isBlinkerActive,
-
-  onTurnRightToggle,
-  isTurnRightActive
+  onTurnRightToggle
 }) {
   return (
     <div style={styles.controlPanel}>
@@ -42,15 +38,12 @@ function ControlPanel({
         />
 
         <DirectionalLights
+        directionalLightsManager={directionalLights}
         onTurnLeftToggle={onTurnLeftToggle}
-        turnLeft={isturnLeftActive}
-
         blinkerActiveToggle={blinkerActiveToggle}
-        blinker={isBlinkerActive}
-
         onTurnRightToggle={onTurnRightToggle}
-        turnRight={isTurnRightActive}
         />
+
         <Acceleration
         onSliderChangingSpeed={onSliderChangeSpeed}
         sliderSpeedAccValue={sliderSpeedValue}

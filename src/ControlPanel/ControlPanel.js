@@ -1,6 +1,7 @@
 import React from 'react';
 import HeadlightControl from './HeadlightControl';
 import TurningMoveControl from './TurningMoveControl';
+import DirectionalLights from './DirectionalLights';
 
 function ControlPanel({ 
   onSliderChange, 
@@ -10,7 +11,16 @@ function ControlPanel({
   isHeadlightON,
 
   onBeamToggle,
-  isBeamHIGH
+  isBeamHIGH,
+
+  onTurnLeftToggle,
+  isturnLeftActive,
+
+  blinkerActiveToggle,
+  isBlinkerActive,
+
+  onTurnRightToggle,
+  isTurnRightActive
 }) {
   return (
     <div style={styles.controlPanel}>
@@ -25,6 +35,18 @@ function ControlPanel({
         <TurningMoveControl
         onSliderChange={onSliderChange}
         sliderValue={sliderValue}/>
+
+        <DirectionalLights
+        onTurnLeftToggle={onTurnLeftToggle}
+        turnLeft={isturnLeftActive}
+
+        blinkerActiveToggle={blinkerActiveToggle}
+        blinker={isBlinkerActive}
+
+        onTurnRightToggle={onTurnRightToggle}
+        turnRight={isTurnRightActive}
+
+        />
     </div>
   );
 }

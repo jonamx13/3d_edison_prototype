@@ -98,6 +98,7 @@ export function Car({ wheelRotationSpeed, directionalLights, headLightsON, headl
             'High' : 5
         }
 
+        // Setup for default values for headlights
         if(headLightsON && headlightsBeamHIGH) {
             headlightBeam.material.emissiveIntensity = beamIntesity['High']
         } else if (headLightsON) {

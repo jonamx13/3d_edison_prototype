@@ -8,17 +8,34 @@ function App() {
   const [turnMoveSlider, setTurnMoveSlider] = useState(0);
   const [headlightsON, setHeadlightsON] = useState(false);
   const [HIGHBeam, setHIGHBeam] = useState(false);
+  const [TurnLEFT, setTurnLEFT] = useState(false);
+  const [BLINK, setBlinkerACTIVE] = useState(false);
+  const [TurnRIGHT, setTurnRIGHT] = useState(false);
 
+  // Front wheels movement for turning right or left
   const handleTurnSliderMove = (value) => {
     setTurnMoveSlider(value);
   };
 
+  // Headlights state for being on/off and being high/low beam
   const handleHeadlightToggle = () => {
     setHeadlightsON(prevState => !prevState);
   };
 
   const handleBeamToggle = () => {
     setHIGHBeam(prevState => !prevState);
+  };
+
+  const handleTurnLeftToggle = () => {
+    setTurnLEFT(prevState => !prevState);
+  };
+
+  const handleBlinkerToggle = () => {
+    setBlinkerACTIVE(prevState => !prevState);
+  };
+
+  const handleTurnRightToggle = () => {
+    setTurnRIGHT(prevState => !prevState);
   };
 
   return (
@@ -41,6 +58,15 @@ function App() {
 
       onBeamToggle={handleBeamToggle}
       isBeamHIGH={HIGHBeam}
+
+      onTurnLeftToggle={handleTurnLeftToggle}
+      isturnLeftActive={TurnLEFT}
+
+      blinkerActiveToggle={handleBlinkerToggle}
+      isBlinkerActive={BLINK}
+
+      onTurnRightToggle={handleTurnRightToggle}
+      isTurnRightActive={TurnRIGHT}
       />
     </div>
   );

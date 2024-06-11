@@ -5,11 +5,12 @@ import { Car } from "./Car";
 import { GroundGrid } from "./GroundGrid";
 
 function CarShow ({
-  turningMove,
-  isheadLightsON,
-  isheadlightBeamHIGH
+    Speed,
+    turningMove,
+    isheadLightsON,
+    isheadlightBeamHIGH,
+    directionalLights
 }) {
-  const speed = 2;
 
   return (
     <>
@@ -17,13 +18,13 @@ function CarShow ({
       <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
       <color args={[0, 0, 0]} attach="background" />
       <Car
-        wheelRotationSpeed={speed}
-        directionalLights={'blinker'}
+        wheelRotationSpeed={Speed}
+        directionalLights={directionalLights}
         headLightsON={isheadLightsON}
         headlightsBeamHIGH={isheadlightBeamHIGH}
         turningMove={turningMove}
       />
-      <GroundGrid speed={speed} />
+      <GroundGrid speed={Speed} />
       <spotLight
         color={[1, 0.25, 0.7]}
         intensity={150}
@@ -42,7 +43,7 @@ function CarShow ({
         castShadow
         shadow-bias={-0.0001}
       />
-      <Ground speed={speed} />
+      <Ground speed={Speed} />
     </>
   );
 }

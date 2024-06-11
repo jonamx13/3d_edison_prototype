@@ -5,6 +5,7 @@ import CarShow from "./CarsShow";
 import ControlPanel from "./ControlPanel/ControlPanel"; // Adjust the path if necessary
 
 function App() {
+  const [acceleration, setAcceleration] = useState(0);
   const [turnMoveSlider, setTurnMoveSlider] = useState(0);
   const [headlightsON, setHeadlightsON] = useState(false);
   const [HIGHBeam, setHIGHBeam] = useState(false);
@@ -12,7 +13,12 @@ function App() {
   const [BLINK, setBlinkerACTIVE] = useState(false);
   const [TurnRIGHT, setTurnRIGHT] = useState(false);
 
-  // Front wheels movement for turning right or left
+  // Speed slider
+  const handleAcceleration = (value) => {
+    setAcceleration(value);
+  }
+
+  // Front wheels movement slider for turning right or left
   const handleTurnSliderMove = (value) => {
     setTurnMoveSlider(value);
   };
@@ -30,6 +36,7 @@ function App() {
     setTurnLEFT(prevState => !prevState);
   };
 
+  // Directional lights Blinking state and turning left/right states
   const handleBlinkerToggle = () => {
     setBlinkerACTIVE(prevState => !prevState);
   };
@@ -43,15 +50,20 @@ function App() {
       <Suspense fallback={null}>
         <Canvas shadows>
           <CarShow
+          Speed={acceleration} // Add use state
           turningMove={turnMoveSlider}
           isheadLightsON={headlightsON}
           isheadlightBeamHIGH={HIGHBeam}
+          directionalLights={'blinker'}
           />
         </Canvas>
       </Suspense>
       <ControlPanel 
-      onSliderChange={handleTurnSliderMove}
-      sliderValue={turnMoveSlider}
+      onSliderChangeSpeed={handleAcceleration}
+      sliderSpeedValue={acceleration}
+
+      onSliderTurnMoveChange={handleTurnSliderMove}
+      sliderTurnMoveValue={turnMoveSlider}
 
       onHeadlightToggle={handleHeadlightToggle}
       isHeadlightON={headlightsON}

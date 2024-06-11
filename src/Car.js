@@ -1,9 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import { Color, Mesh, SpotLight } from "three";
+import { Color, Mesh } from "three";
 
-export function Car({ wheelRotationSpeed, directionalLights, headLightsON, headlightsBeamHIGH, turningMove }) {
+export function Car({
+    wheelRotationSpeed,
+    turningMove,
+    headLightsON,
+    headlightsBeamHIGH,
+    directionalLights
+}) {
     const gltf = useLoader(
         GLTFLoader,
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
@@ -62,7 +68,8 @@ export function Car({ wheelRotationSpeed, directionalLights, headLightsON, headl
         
         let leftDirectionalLight = gltf.scene.children[4];
         let rightDirectionalLight = gltf.scene.children[5];
-        const turnedOFF = 0;
+        const turnedOFFDirectional = 0;
+        const turnedONDirectional = 5;
         const blinking = Math.sin (t*12) * (0.5 * 5) + (0.5 * 5);
         
         switch(directionalLights) {
@@ -71,16 +78,16 @@ export function Car({ wheelRotationSpeed, directionalLights, headLightsON, headl
                 rightDirectionalLight.material.emissiveIntensity = blinking;
                 break;
             case 'left':
-                leftDirectionalLight.material.emissiveIntensity = blinking;
-                rightDirectionalLight.material.emissiveIntensity = turnedOFF;
+                leftDirectionalLight.material.emissiveIntensity = turnedONDirectional;
+                rightDirectionalLight.material.emissiveIntensity = turnedOFFDirectional;
                 break;
             case 'right':
-                leftDirectionalLight.material.emissiveIntensity = turnedOFF;
-                rightDirectionalLight.material.emissiveIntensity = blinking;
+                leftDirectionalLight.material.emissiveIntensity = turnedOFFDirectional;
+                rightDirectionalLight.material.emissiveIntensity = turnedONDirectional;
                 break;
             default:
-                leftDirectionalLight.material.emissiveIntensity = turnedOFF;
-                rightDirectionalLight.material.emissiveIntensity= turnedOFF;
+                leftDirectionalLight.material.emissiveIntensity = turnedOFFDirectional;
+                rightDirectionalLight.material.emissiveIntensity= turnedOFFDirectional;
         }
         
         // Doors

@@ -1,7 +1,8 @@
 import React from "react";
 
 function TurningMoveControl({
-  onSliderChange, sliderValue
+    onSliderTurningMoveChange,
+    sliderTurningMoveValue
 }) {
   return (
     <div style={styles.sliderContainer}>
@@ -11,8 +12,8 @@ function TurningMoveControl({
         min="-0.5"
         max="0.5"
         step="0.01"
-        value={sliderValue}
-        onChange={(e) => onSliderChange(parseFloat(e.target.value))}
+        value={sliderTurningMoveValue}
+        onChange={(e) => onSliderTurningMoveChange(parseFloat(e.target.value))}
         style={styles.slider}
       />
       <span style={styles.label}>Right</span>

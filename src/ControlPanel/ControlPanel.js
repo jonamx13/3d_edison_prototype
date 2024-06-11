@@ -2,10 +2,14 @@ import React from 'react';
 import HeadlightControl from './HeadlightControl';
 import TurningMoveControl from './TurningMoveControl';
 import DirectionalLights from './DirectionalLights';
+import Acceleration from './Acceleration';
 
 function ControlPanel({ 
-  onSliderChange, 
-  sliderValue,
+  onSliderChangeSpeed,
+  sliderSpeedValue,
+
+  onSliderTurnMoveChange, 
+  sliderTurnMoveValue,
 
   onHeadlightToggle,
   isHeadlightON,
@@ -33,8 +37,9 @@ function ControlPanel({
         />
 
         <TurningMoveControl
-        onSliderChange={onSliderChange}
-        sliderValue={sliderValue}/>
+        onSliderTurningMoveChange={onSliderTurnMoveChange}
+        sliderTurningMoveValue={sliderTurnMoveValue}
+        />
 
         <DirectionalLights
         onTurnLeftToggle={onTurnLeftToggle}
@@ -45,7 +50,10 @@ function ControlPanel({
 
         onTurnRightToggle={onTurnRightToggle}
         turnRight={isTurnRightActive}
-
+        />
+        <Acceleration
+        onSliderChangingSpeed={onSliderChangeSpeed}
+        sliderSpeedAccValue={sliderSpeedValue}
         />
     </div>
   );

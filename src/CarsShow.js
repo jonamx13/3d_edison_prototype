@@ -4,8 +4,7 @@ import { Ground } from "./Ground";
 import { Car } from "./Car";
 import { GroundGrid } from "./GroundGrid";
 
-function CarShow() {
-  // Controls
+function CarShow({ turningMove }) {
   const speed = 2;
 
   return (
@@ -17,7 +16,7 @@ function CarShow() {
         wheelRotationSpeed={speed}
         directionalLights={'blinker'}
         headLights={'high'}
-        turningMove={-0.5} // TODO: Make it analog
+        turningMove={turningMove} // Use the prop here
       />
       <GroundGrid speed={speed} />
       <spotLight

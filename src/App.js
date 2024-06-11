@@ -2,7 +2,8 @@ import React, { useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import './style.css'
 import CarShow from "./CarsShow";
-import ControlPanel from "./ControlPanel/ControlPanel"; // Adjust the path if necessary
+import ControlPanel from "./ControlPanel/ControlPanel";
+import ExternalEvents from './ExternalEvents/ExternalEvents'
 
 function App() {
   const [acceleration, setAcceleration] = useState(0);
@@ -13,6 +14,12 @@ function App() {
   const [BLINK, setBlinkerACTIVE] = useState(false);
   const [TurnRIGHT, setTurnRIGHT] = useState(false);
   const [directionalLightsManager, setDirectionalLightsManager] = useState('');
+  const [openDoors, setOpenDoors] = useState({
+    Front_Left: false,
+    Front_Right: false,
+    Back_Left: false,
+    Back_Right: false,
+  });
 
   // Speed slider
   const handleAcceleration = (value) => {
@@ -99,6 +106,7 @@ function App() {
           />
         </Canvas>
       </Suspense>
+
       <ControlPanel 
       onSliderChangeSpeed={handleAcceleration}
       sliderSpeedValue={acceleration}
@@ -116,6 +124,12 @@ function App() {
       onTurnLeftToggle={handleTurnLeftToggle}
       blinkerActiveToggle={handleBlinkerToggle}
       onTurnRightToggle={handleTurnRightToggle}
+      />
+
+      <ExternalEvents
+        // weather={} //TODO: Integrate HDRI's and a weather API (Also a manual control to simulate the climate change)
+        openDoors={openDoors}
+        setOpenDoors={setOpenDoors}
       />
     </div>
   );

@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { Color, Mesh, SpotLight } from "three";
 
-export function Car({ wheelRotationSpeed, directionalLights, headLights, turningMove }) {
+export function Car({ wheelRotationSpeed, directionalLights, headLightsON, headlightsBeamHIGH, turningMove }) {
     const gltf = useLoader(
         GLTFLoader,
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
@@ -55,7 +55,7 @@ export function Car({ wheelRotationSpeed, directionalLights, headLights, turning
             wheels.children[index].rotation.z = t * -wheelRotationSpeed;
         }
         
-        wheels.children[8].rotation.y = turningMove; // TODO: Adjust range from -0.5 to 0.5
+        wheels.children[8].rotation.y = turningMove;
         wheels.children[9].rotation.y = turningMove;
 
         // Turning Lights
@@ -97,15 +97,13 @@ export function Car({ wheelRotationSpeed, directionalLights, headLights, turning
             'Low' : 1,
             'High' : 5
         }
-        switch(headLights) {
-            case 'low':
-                headlightBeam.material.emissiveIntensity = beamIntesity['Low'];
-                break;
-            case 'high':
-                headlightBeam.material.emissiveIntensity = beamIntesity['High'];
-                break;
-            default:
-                headlightBeam.material.emissiveIntensity = beamIntesity['OFF'];
+
+        if(headLightsON && headlightsBeamHIGH) {
+            headlightBeam.material.emissiveIntensity = beamIntesity['High']
+        } else if (headLightsON) {
+            headlightBeam.material.emissiveIntensity = beamIntesity['Low'];
+        } else {
+            headlightBeam.material.emissiveIntensity = beamIntesity['OFF'];
         }
         
     });

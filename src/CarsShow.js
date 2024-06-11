@@ -4,7 +4,11 @@ import { Ground } from "./Ground";
 import { Car } from "./Car";
 import { GroundGrid } from "./GroundGrid";
 
-function CarShow({ turningMove }) {
+function CarShow ({
+  turningMove,
+  isheadLightsON,
+  isheadlightBeamHIGH
+}) {
   const speed = 2;
 
   return (
@@ -15,8 +19,9 @@ function CarShow({ turningMove }) {
       <Car
         wheelRotationSpeed={speed}
         directionalLights={'blinker'}
-        headLights={'high'}
-        turningMove={turningMove} // Use the prop here
+        headLightsON={isheadLightsON}
+        headlightsBeamHIGH={isheadlightBeamHIGH}
+        turningMove={turningMove}
       />
       <GroundGrid speed={speed} />
       <spotLight

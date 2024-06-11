@@ -5,21 +5,43 @@ import CarShow from "./CarsShow";
 import ControlPanel from "./ControlPanel/ControlPanel"; // Adjust the path if necessary
 
 function App() {
-  const [sliderValue, setSliderValue] = useState(0);
+  const [turnMoveSlider, setTurnMoveSlider] = useState(0);
+  const [headlightsON, setHeadlightsON] = useState(false);
+  const [HIGHBeam, setHIGHBeam] = useState(false);
 
-  const handleSliderChange = (value) => {
-    setSliderValue(value);
-    // You can pass the value to the CarShow component or use it directly in this component.
+  const handleTurnSliderMove = (value) => {
+    setTurnMoveSlider(value);
+  };
+
+  const handleHeadlightToggle = () => {
+    setHeadlightsON(prevState => !prevState);
+  };
+
+  const handleBeamToggle = () => {
+    setHIGHBeam(prevState => !prevState);
   };
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
       <Suspense fallback={null}>
         <Canvas shadows>
-          <CarShow turningMove={sliderValue} />
+          <CarShow
+          turningMove={turnMoveSlider}
+          isheadLightsON={headlightsON}
+          isheadlightBeamHIGH={HIGHBeam}
+          />
         </Canvas>
       </Suspense>
-      <ControlPanel onSliderChange={handleSliderChange} sliderValue={sliderValue} />
+      <ControlPanel 
+      onSliderChange={handleTurnSliderMove}
+      sliderValue={turnMoveSlider}
+
+      onHeadlightToggle={handleHeadlightToggle}
+      isHeadlightON={headlightsON}
+
+      onBeamToggle={handleBeamToggle}
+      isBeamHIGH={HIGHBeam}
+      />
     </div>
   );
 }

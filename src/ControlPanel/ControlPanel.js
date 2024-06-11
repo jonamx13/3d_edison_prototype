@@ -1,19 +1,30 @@
 import React from 'react';
+import HeadlightControl from './HeadlightControl';
+import TurningMoveControl from './TurningMoveControl';
 
-function ControlPanel({ onSliderChange, sliderValue }) {
+function ControlPanel({ 
+  onSliderChange, 
+  sliderValue,
+
+  onHeadlightToggle,
+  isHeadlightON,
+
+  onBeamToggle,
+  isBeamHIGH
+}) {
   return (
     <div style={styles.controlPanel}>
-      <span style={styles.label}>Left</span>
-      <input
-        type="range"
-        min="-0.5"
-        max="0.5"
-        step="0.01"
-        value={sliderValue}
-        onChange={(e) => onSliderChange(parseFloat(e.target.value))}
-        style={styles.slider}
-      />
-      <span style={styles.label}>Right</span>
+        <HeadlightControl
+        onHeadlightToggle={onHeadlightToggle}
+        isON={isHeadlightON}
+
+        onBeamToggle={onBeamToggle}
+        isHIGHBeam={isBeamHIGH}
+        />
+
+        <TurningMoveControl
+        onSliderChange={onSliderChange}
+        sliderValue={sliderValue}/>
     </div>
   );
 }
@@ -30,13 +41,7 @@ const styles = {
     padding: '10px',
     borderRadius: '5px',
     boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-  },
-  label: {
-    margin: '0 10px',
-  },
-  slider: {
-    width: '200px',
-  },
+  }
 };
 
 export default ControlPanel;

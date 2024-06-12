@@ -3,6 +3,7 @@ import HeadlightControl from './HeadlightControl';
 import TurningMoveControl from './TurningMoveControl';
 import DirectionalLights from './DirectionalLights';
 import Acceleration from './Acceleration';
+import OpenDoorsUI from './OpenDoorsUI';
 
 function ControlPanel({ 
   onSliderChangeSpeed,
@@ -20,7 +21,9 @@ function ControlPanel({
   directionalLights,
   onTurnLeftToggle,
   blinkerActiveToggle,
-  onTurnRightToggle
+  onTurnRightToggle,
+
+  openDoors
 }) {
   return (
     <div style={styles.controlPanel}>
@@ -42,6 +45,10 @@ function ControlPanel({
         onTurnLeftToggle={onTurnLeftToggle}
         blinkerActiveToggle={blinkerActiveToggle}
         onTurnRightToggle={onTurnRightToggle}
+        />
+
+        <OpenDoorsUI
+        openDoors={openDoors}
         />
 
         <Acceleration

@@ -127,6 +127,8 @@ function App() {
           onTurnLeftToggle={handleTurnLeftToggle}
           blinkerActiveToggle={handleBlinkerToggle}
           onTurnRightToggle={handleTurnRightToggle}
+
+          openDoors={openDoors}
         />
         <ExternalEvents
           // weather={} //TODO: Integrate HDRI's and a weather API (Also a manual control to simulate the climate change)

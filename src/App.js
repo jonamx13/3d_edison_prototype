@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import './style.css'
+import './style.css';
 import CarShow from "./CarsShow";
 import ControlPanel from "./ControlPanel/ControlPanel";
 import ExternalEvents from './ExternalEvents/ExternalEvents'
@@ -8,6 +8,7 @@ import DigitalUI from "./DigitalUI";
 
 function App() {
   const [acceleration, setAcceleration] = useState(0);
+  const [manualWeather, setManualWeather] = useState(0);
   const [turnMoveSlider, setTurnMoveSlider] = useState(0);
   const [headlightsON, setHeadlightsON] = useState(false);
   const [HIGHBeam, setHIGHBeam] = useState(false);
@@ -25,6 +26,11 @@ function App() {
   // Speed slider
   const handleAcceleration = (value) => {
     setAcceleration(value);
+  }
+  
+  // Weather slider
+  const handleManualWeather = (value) => {
+    setManualWeather(value);
   }
 
   // Front wheels movement slider for turning right or left
@@ -97,7 +103,7 @@ function App() {
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
       <Suspense fallback={null}>
-        <Canvas shadows>
+        <Canvas shadows environment='/public/textures/terrain-normal.jpg'>
           <CarShow
           Speed={acceleration} // Add use state
           turningMove={turnMoveSlider}
@@ -105,6 +111,8 @@ function App() {
           isheadlightBeamHIGH={HIGHBeam}
           directionalLights={directionalLightsManager}
           openedDoors={openDoors}
+
+          dayNight={manualWeather}
           />
         </Canvas>
       </Suspense>
@@ -131,9 +139,12 @@ function App() {
           openDoors={openDoors}
         />
         <ExternalEvents
-          // weather={} //TODO: Integrate HDRI's and a weather API (Also a manual control to simulate the climate change)
           openDoors={openDoors}
           setOpenDoors={setOpenDoors}
+          // weather={} //TODO: Integrate HDRI's and a weather API (Also a manual control to simulate the climate change)
+          onSliderChangingWeather={handleManualWeather}
+          sliderWeatherValue={manualWeather}
+
         />
       </DigitalUI>
     </div>

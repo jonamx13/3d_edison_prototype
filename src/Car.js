@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { Color, Mesh } from "three";
@@ -8,7 +8,8 @@ export function Car({
     turningMove,
     headLightsON,
     headlightsBeamHIGH,
-    directionalLights
+    directionalLights,
+    openedDoors
 }) {
     const gltf = useLoader(
         GLTFLoader,
@@ -18,6 +19,14 @@ export function Car({
     // Refs for headlights to add SpotLights
     const leftHeadlightRef = useRef();
     const rightHeadlightRef = useRef();
+
+    // Hook for the initial state of the Doors
+    const [initialDoorsState, setInitialDoorsState] = useState({
+        Front_Left: -0.5,
+        Front_Right: 0.5,
+        Back_Left: -0.5,
+        Back_Right: 0.5,
+    });
 
     // Position Car in space
     useEffect(() => {
@@ -40,6 +49,14 @@ export function Car({
                     object.material.emissive = new Color(0xFF0000); // White color for emissive
                 }
             }
+        });
+
+        // Store initial doors state
+        setInitialDoorsState({
+            Front_Left: gltf.scene.children[0].rotation.y,
+            Front_Right: gltf.scene.children[6].rotation.y,
+            Back_Left: gltf.scene.children[1].rotation.y,
+            Back_Right: gltf.scene.children[7].rotation.y,
         });
     }, [gltf]);
 
@@ -90,12 +107,28 @@ export function Car({
                 rightDirectionalLight.material.emissiveIntensity= turnedOFFDirectional;
         }
         
-        // Doors
-        let doors = gltf.scene;
-        doors.children[0].rotation.y = -0.5; // Front_Left
-        doors.children[1].rotation.y = -0.5; // Back_Left
-        doors.children[6].rotation.y = 0.5; // Front_Right
-        doors.children[7].rotation.y = 0.5; // Back_Right
+        // Doors animation
+        for (const [doorName, rotationValue] of Object.entries(openedDoors)) {
+            const doorIndexMap = new Map([
+                ['Front_Left', 0],
+                ['Back_Left', 1],
+                ['Front_Right', 6],
+                ['Back_Right', 7],
+            ]);
+            const doorIndex = doorIndexMap.get(doorName);
+
+            if (doorIndex !== undefined) {
+                // If the door is opened (true), animate it
+                if (rotationValue) {
+                    // Check if it's a LEFT or RIGHT door and set rotation accordingly
+                    const rotation = doorName.includes('Right') ? 0.5 : -0.5;
+                    gltf.scene.children[doorIndex].rotation.y = rotation;
+                } else {
+                    // Otherwise, set it to the initial state
+                    gltf.scene.children[doorIndex].rotation.y = initialDoorsState[doorName];
+                }
+            }
+        }
         
         // Headlights
         let headlightBeam = gltf.scene.children[2];
@@ -116,10 +149,9 @@ export function Car({
         
     });
 
-
     return (
         <group>
-            <primitive object={gltf.scene} />
+            <primitive object={gltf.scene}/>
 
             <spotLight
                 ref={leftHeadlightRef}

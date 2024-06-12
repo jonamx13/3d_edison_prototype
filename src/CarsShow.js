@@ -9,7 +9,8 @@ function CarShow ({
     turningMove,
     isheadLightsON,
     isheadlightBeamHIGH,
-    directionalLights
+    directionalLights,
+    openedDoors
 }) {
 
   return (
@@ -23,6 +24,7 @@ function CarShow ({
         headLightsON={isheadLightsON}
         headlightsBeamHIGH={isheadlightBeamHIGH}
         turningMove={turningMove}
+        openedDoors={openedDoors}
       />
       <GroundGrid speed={Speed} />
       <spotLight

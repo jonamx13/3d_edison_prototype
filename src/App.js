@@ -104,6 +104,7 @@ function App() {
           isheadLightsON={headlightsON}
           isheadlightBeamHIGH={HIGHBeam}
           directionalLights={directionalLightsManager}
+          openedDoors={openDoors}
           />
         </Canvas>
       </Suspense>

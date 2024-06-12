@@ -41,12 +41,15 @@ export function Car({
 
                 // Set emissive color for headlight bulbs to white
                 
-                if (object.name.includes("HeadLights_Up")) { // Adjust the name as per your model
+                if (object.name.includes('HeadLights_Up')) {
                     object.material.emissive = new Color(0xffffff); // White color for emissive
                 }
                 // Set emissive color for headlight bulbs to white
-                if (object.name.includes("Directional_Light_Right")) { // Adjust the name as per your model
+                if (object.name.includes('Directional_Light_Right')) {
                     object.material.emissive = new Color(0xFF0000); // White color for emissive
+                }
+                if (object.name.includes('_Door')) {
+                    object.material.emissive = new Color (0xFFA500);
                 }
             }
         });
@@ -108,27 +111,47 @@ export function Car({
         }
         
         // Doors animation
-        for (const [doorName, rotationValue] of Object.entries(openedDoors)) {
-            const doorIndexMap = new Map([
-                ['Front_Left', 0],
-                ['Back_Left', 1],
-                ['Front_Right', 6],
-                ['Back_Right', 7],
-            ]);
-            const doorIndex = doorIndexMap.get(doorName);
+for (const [doorName, rotationValue] of Object.entries(openedDoors)) {
+    const doorIndexMap = new Map([
+        ['Front_Left', 0],
+        ['Back_Left', 1],
+        ['Front_Right', 6],
+        ['Back_Right', 7],
+    ]);
+    const doorIndex = doorIndexMap.get(doorName);
 
-            if (doorIndex !== undefined) {
-                // If the door is opened (true), animate it
-                if (rotationValue) {
-                    // Check if it's a LEFT or RIGHT door and set rotation accordingly
-                    const rotation = doorName.includes('Right') ? 0.5 : -0.5;
-                    gltf.scene.children[doorIndex].rotation.y = rotation;
-                } else {
-                    // Otherwise, set it to the initial state
-                    gltf.scene.children[doorIndex].rotation.y = initialDoorsState[doorName];
+    if (doorIndex !== undefined) {
+        const doorObject = gltf.scene.children[doorIndex];
+        // If the door is opened (true), animate it
+        if (rotationValue) {
+            // Check if it's a LEFT or RIGHT door and set rotation accordingly
+            const rotation = doorName.includes('Right') ? 0.5 : -0.5;
+            doorObject.rotation.y = rotation;
+
+            // Set emissive properties for the door and its children
+            doorObject.traverse((child) => {
+                if (child instanceof Mesh && child.material) {
+                    child.material.emissive = new Color(0xFFA500); // Orange color
+                    // Calculate blinking intensity
+                    const blinkingIntensity = Math.sin(t * 2 * Math.PI * 1.) * 2.5 + 2.5; // Blinking interval between 0 and 5
+                    child.material.emissiveIntensity = blinkingIntensity;
                 }
-            }
+            });
+        } else {
+            // Otherwise, set it to the initial state
+            doorObject.rotation.y = initialDoorsState[doorName];
+
+            // Reset emissive properties for the door and its children
+            doorObject.traverse((child) => {
+                if (child instanceof Mesh && child.material) {
+                    child.material.emissive = new Color(0x000000); // Reset emissive color
+                    child.material.emissiveIntensity = 0; // Reset emissive intensity
+                }
+            });
         }
+    }
+}
+
         
         // Headlights
         let headlightBeam = gltf.scene.children[2];

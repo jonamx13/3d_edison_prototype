@@ -1,0 +1,11 @@
+.circle {
+    width: 712px;
+    height: 712px;
+    border-radius: 50%;
+    background-color: #1a1a1a; /* Adjust the color as per your image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #ccc; /* Optional for border styling */
+    margin: 0 10px; /* Adjust the spacing between circles and rectangle */
+  }

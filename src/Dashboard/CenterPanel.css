@@ -1,0 +1,11 @@
+.center {
+    width: 316px; /* Adjust width based on your layout */
+    height: 712px;
+    background-color: #333; /* Adjust color as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px; /* Optional for rounded corners */
+  }

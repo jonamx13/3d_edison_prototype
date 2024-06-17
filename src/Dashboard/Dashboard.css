@@ -1,0 +1,9 @@
+.dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1740px;
+    height: 712px;
+    background-color: #660000; /* Background color of the dashboard */
+  }
+  

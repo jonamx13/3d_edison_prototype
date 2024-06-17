@@ -1,11 +1,22 @@
 .circle {
-    width: 712px;
-    height: 712px;
-    border-radius: 50%;
-    background-color: #1a1a1a; /* Adjust the color as per your image */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 5px solid #ccc; /* Optional for border styling */
-    margin: 0 10px; /* Adjust the spacing between circles and rectangle */
-  }
+  width: 712px;
+  height: 712px;
+  border-radius: 50%;
+  background-color: #1a1a1a; /* Adjust the color as per your image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #ccc; /* Optional for border styling */
+  overflow: hidden; /* Ensure content is clipped within the circle */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Optional shadow for better appearance */
+  position: absolute;
+  top: 0;
+}
+
+.left-circle {
+  left: 0;
+}
+
+.right-circle {
+  right: 0;
+}

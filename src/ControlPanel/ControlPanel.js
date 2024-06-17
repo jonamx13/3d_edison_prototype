@@ -4,7 +4,7 @@ import TurningMoveControl from './TurningMoveControl';
 import DirectionalLights from './DirectionalLights';
 import Acceleration from './Acceleration';
 import OpenDoorsUI from './OpenDoorsUI';
-import '../DigitalUI.css';
+import '../Car/DigitalUI.css';
 
 function ControlPanel({ 
   onSliderChangeSpeed,

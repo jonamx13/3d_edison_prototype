@@ -1,8 +1,8 @@
 import React from 'react';
 import './CenterPanel.css';
 
-const Center = ({ children }) => {
+const CenterPanel = ({ children }) => {
   return <div className="center">{children}</div>;
 };
 
-export default Center;
+export default CenterPanel;

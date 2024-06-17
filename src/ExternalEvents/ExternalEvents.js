@@ -1,5 +1,5 @@
 import React from 'react';
-import '../DigitalUI.css'
+import '../Car/DigitalUI.css'
 
 function ExternalEvents({
   openDoors,

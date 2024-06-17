@@ -1,5 +1,5 @@
 import React from 'react';
-import '../src/DigitalUI.css';
+import './DigitalUI.css';
 
 function DigitalUI({ children }) {
   return (

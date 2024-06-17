@@ -1,8 +1,8 @@
 import React from 'react';
-import './Circle.css';
+import './CircularPanel.css';
 
-const Circle = ({ children }) => {
-  return <div className="circle">{children}</div>;
+const CircularPanel = ({ className, children }) => {
+   return <div className={`circle ${className}`}>{children}</div>;
 };
 
-export default Circle;
+export default CircularPanel;

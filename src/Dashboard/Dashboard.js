@@ -1,28 +1,30 @@
 import React from 'react';
 import './Dashboard.css';
-import CircularPanel from './CenterPanel';
+import CircularPanel from './CircularPanel';
 import CenterPanel from './CenterPanel';
+import CarCanvas from '../Car/CarCanvas';
+import SignalsPanel from './SignalsBoard/SignalsPanel';
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
-      <CircularPanel>
+      <CircularPanel className="left-circle">
         {/* Left Circle Content */}
-        <div>Left Circle Content</div>
+        <CarCanvas/>
       </CircularPanel>
       <CenterPanel>
         {/* Center Content */}
-        <div>
-          {/* Add your center content here, such as gear shift, battery status, etc. */}
-          <div>1 2 3 4 5 R</div>
-          <div>N</div>
-          <div>75%</div>
-          <div>04 Hours 30 Mins Remaining</div>
-        </div>
+        <SignalsPanel className='signals-panel'/>
+        {/* <div className="center-content">
+          <div className="gear-indicator">1 2 3 4 5 R</div>
+          <div className="center-indicator">N</div>
+          <div className="battery-status">75%</div>
+          <div className="remaining-time">04 Hours 30 Mins Remaining</div>
+        </div> */}
       </CenterPanel>
-      <CircularPanel>
+      <CircularPanel className="right-circle">
         {/* Right Circle Content */}
-        <div>Right Circle Content</div>
+        <div className="circle-content">Right Circle Content</div>
       </CircularPanel>
     </div>
   );

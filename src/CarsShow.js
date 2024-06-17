@@ -21,7 +21,7 @@ function CarShow({
   return (
     <>
       {/* Environment component with interpolated opacity for night_Sky */}
-      <Environment files={['textures/night_Sky.hdr']} />
+      <Environment files={['textures/day_Sky.hdr']} />
 
       <OrbitControls target={[0, 0.35, 0]} maxPolarAngle={1.45} />
       <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />

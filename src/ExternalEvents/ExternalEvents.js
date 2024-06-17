@@ -1,4 +1,5 @@
 import React from 'react';
+import '../DigitalUI.css'
 
 function ExternalEvents({
   openDoors,

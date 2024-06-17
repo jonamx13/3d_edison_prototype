@@ -4,6 +4,7 @@ import TurningMoveControl from './TurningMoveControl';
 import DirectionalLights from './DirectionalLights';
 import Acceleration from './Acceleration';
 import OpenDoorsUI from './OpenDoorsUI';
+import '../DigitalUI.css';
 
 function ControlPanel({ 
   onSliderChangeSpeed,
@@ -26,7 +27,7 @@ function ControlPanel({
   openDoors
 }) {
   return (
-    <div style={styles.controlPanel}>
+    <div className='panel_int'>
         <HeadlightControl
         onHeadlightToggle={onHeadlightToggle}
         isON={isHeadlightON}
@@ -63,7 +64,7 @@ const styles = {
     controlPanel: {
       margin: '10px',
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: 'rgba(255, 255, 255, 0.8)',
       padding: '10px',

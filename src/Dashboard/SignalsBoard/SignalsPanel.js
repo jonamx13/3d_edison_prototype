@@ -1,10 +1,12 @@
 import React from "react";
+import './SignalsPanelStyles/SignalsPanel.css'; // Adjust import path
 import Arrow from "./Arrow";
-import './SignalsPanelStyles/SignalsPanel.css'
 
 function SignalsPanel() {
     return (
-        <Arrow/>
+        <div className="signals-panel">
+            <Arrow />
+        </div>
     );
 }
 

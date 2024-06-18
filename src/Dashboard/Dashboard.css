@@ -37,27 +37,3 @@
   position: absolute;
   right: 0;
 }
-
-.center-content {
-  color: white;
-  text-align: center;
-}
-
-.gear-indicator {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.center-indicator {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.battery-status {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-.remaining-time {
-  font-size: 1rem;
-}

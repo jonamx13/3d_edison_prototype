@@ -1,8 +1,8 @@
 import React from "react";
 
-function Arrow () {
+function Arrow() {
     return (
-        <div></div>
+        <div>Arrow Component</div>
     );
 }
 

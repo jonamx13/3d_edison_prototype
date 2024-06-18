@@ -1,0 +1,9 @@
+.center-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vw; /* Match the height of the circles */
+  max-height: 40vw; /* Ensure it doesn't exceed the height of the circles */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}

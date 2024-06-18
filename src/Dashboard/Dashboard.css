@@ -1,17 +1,41 @@
-.dashboard {
-  position: relative;
-  width: 1740px;
-  height: 712px;
+.dashboard-wrapper {
+  width: 60vw; /* 80% of the viewport width */
+  max-height: 80vh; /* 80% of the viewport height */
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  max-width: 100%;
 }
 
-.circle-content {
-  color: white;
-  font-size: 1.5rem;
-  text-align: center;
+.dashboard {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a; /* Add background color for visibility */
+}
+
+.circle {
+  width: 40%; /* Adjust to desired percentage */
+  aspect-ratio: 1 / 1; /* Ensures the circle maintains a 1:1 ratio */
+  border-radius: 50%;
+  background-color: #1a1a1a; /* Adjust the color as per your image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #ccc; /* Optional for border styling */
+  overflow: hidden; /* Ensure content is clipped within the circle */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Optional shadow for better appearance */
+}
+
+.left-circle {
+  position: absolute;
+  left: 0;
+}
+
+.right-circle {
+  position: absolute;
+  right: 0;
 }
 
 .center-content {

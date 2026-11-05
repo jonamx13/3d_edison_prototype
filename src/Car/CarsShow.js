@@ -1,31 +1,47 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment } from "@react-three/drei";
 import { Ground } from "./Ground";
 import { Car } from "./Car";
 import { GroundGrid } from "./GroundGrid";
+import { SceneAtmosphere } from "./SceneAtmosphere";
+import { Rain } from "./Rain";
 
 function CarShow({
-    Speed,
-    turningMove,
-    isheadLightsON,
-    isheadlightBeamHIGH,
-    directionalLights,
-    openedDoors,
-    dayNight // Prop value ranging from -10 to 10
+  Speed,
+  turningMove,
+  isheadLightsON,
+  isheadlightBeamHIGH,
+  directionalLights,
+  openedDoors,
+  dayNight,
+  climate,
 }) {
-  // Calculate the opacity of the night_Sky based on the interpolation value
-  const nightSkyOpacity = Math.max(0, Math.min((10 - dayNight) / 10, 1));
-  // Calculate the opacity of the day_Sky based on the interpolation value
-  const daySkyOpacity = Math.max(0, Math.min((dayNight + 10) / 10, 1));
+  // Smoothed steering-derived scroll angle.
+  // Reaches turningMove * 0.9 rad (±0.45 rad ≈ ±26°) with a spring-like ease.
+  const scrollAngleRef = useRef(0);
+
+  useFrame((_, delta) => {
+    const target = turningMove * 0.9;
+    scrollAngleRef.current +=
+      (target - scrollAngleRef.current) * Math.min(1, delta * 6);
+  });
 
   return (
     <>
-      {/* Environment component with interpolated opacity for night_Sky */}
+      {/* Sky, sun/moon, ambient, fog — driven by dayNight + climate */}
+      <SceneAtmosphere dayNight={dayNight} climate={climate} />
+
+      {/* Rain particles — hidden when climate = 0 */}
+      <Rain intensity={climate} />
+
+      {/* HDRi for car paint reflections only */}
       <Environment files={['textures/day_Sky.hdr']} />
 
       <OrbitControls target={[0, 0.35, 0]} maxPolarAngle={1.45} />
       <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
-      <color args={[0, 0, 0]} attach="background" />
+
+      {/* Car stays put — no group rotation */}
       <Car
         wheelRotationSpeed={Speed}
         directionalLights={directionalLights}
@@ -34,8 +50,9 @@ function CarShow({
         turningMove={turningMove}
         openedDoors={openedDoors}
       />
-      <GroundGrid speed={Speed} />
-      {/* Define your spotlights or other lights here */}
+
+      <GroundGrid speed={Speed} scrollAngleRef={scrollAngleRef} />
+
       <spotLight
         color={[1, 0.25, 0.7]}
         intensity={150}
@@ -54,7 +71,8 @@ function CarShow({
         castShadow
         shadowBias={-0.0001}
       />
-      <Ground speed={Speed} />
+
+      <Ground speed={Speed} scrollAngleRef={scrollAngleRef} />
     </>
   );
 }

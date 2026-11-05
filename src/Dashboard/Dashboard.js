@@ -12,7 +12,10 @@ const Dashboard = () => {
       <CentralPanel>
           <div className="central-content">
             <SignalsPanel className='signals-panel' />
-            {/* Other content within CentralPanel */}
+            <SignalsPanel className='signals-panel' />
+            <SignalsPanel className='signals-panel' />
+            <SignalsPanel className='signals-panel' />
+            <SignalsPanel className='signals-panel' />
           </div>
         </CentralPanel>
 

@@ -1,38 +1,27 @@
-import React from "react";
+import React from 'react';
+import SteeringWheel from './SteeringWheel';
+import './ControlPanel.css';
 
-function TurningMoveControl({
-    onSliderTurningMoveChange,
-    sliderTurningMoveValue
-}) {
+function TurningMoveControl({ onSliderTurningMoveChange, sliderTurningMoveValue }) {
   return (
-    <div style={styles.sliderContainer}>
-      <span style={styles.label}>Left</span>
-      <input
-        type="range"
-        min="-0.5"
-        max="0.5"
-        step="0.01"
-        value={sliderTurningMoveValue}
-        onChange={(e) => onSliderTurningMoveChange(parseFloat(e.target.value))}
-        style={styles.slider}
-      />
-      <span style={styles.label}>Right</span>
+    <div className="panel-section">
+      <div className="panel-section-title">Steering</div>
+      <div className="slider-wrap">
+        <SteeringWheel value={sliderTurningMoveValue} />
+        <input
+          type="range"
+          min="-0.5"
+          max="0.5"
+          step="0.01"
+          value={sliderTurningMoveValue}
+          onChange={(e) => onSliderTurningMoveChange(parseFloat(e.target.value))}
+        />
+        <span className="slider-value">
+          {sliderTurningMoveValue.toFixed(2)}
+        </span>
+      </div>
     </div>
   );
 }
-
-const styles = {
-  label: {
-    margin: '0 10px',
-  },
-  slider: {
-    flex: '1 1 200px',
-  },
-  sliderContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    flex: '1',
-  },
-};
 
 export default TurningMoveControl;

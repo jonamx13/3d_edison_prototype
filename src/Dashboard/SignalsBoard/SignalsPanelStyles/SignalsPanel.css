@@ -1,11 +1,14 @@
 .signals-panel {
-    width: 300px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.8); /* Adjust background color and opacity */
-    backdrop-filter: blur(2px); /* Optional: Applies a blur effect */
-    border-radius: 10px;
+    width: 30%; /* Adjust as needed for your layout */
+    padding-top: 15.88%; /* Aspect ratio based on 76px height and 478px width */
+    position: relative;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    border-radius: 38px; /* Half of the height for a capsule shape */
     border: 1px solid rgba(255, 255, 255, 0.18);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
+    min-width: 100px; /* Minimum width to prevent collapsing when empty */
+    max-width: 478px; /* Maximum width based on original design */
+    margin: auto; /* Center horizontally */
 }

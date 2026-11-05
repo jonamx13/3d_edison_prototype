@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-import Dashboard from './Dashboard/Dashboard';
+import CarCanvas from './Car/CarCanvas'
+import Dashboard from './Dashboard/Dashboard'
 
 function App() {
   return (
     <div className="app-container">
-      <Dashboard />
+      {/* <Dashboard/> */}
+      <CarCanvas />
     </div>
   );
 }

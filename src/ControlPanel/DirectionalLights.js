@@ -1,72 +1,41 @@
-import React from "react";
+import React from 'react';
+import './ControlPanel.css';
 
 function DirectionalLights({
-    directionalLightsManager,
-    onTurnLeftToggle,
-    blinkerActiveToggle,
-    onTurnRightToggle
+  directionalLightsManager,
+  onTurnLeftToggle,
+  blinkerActiveToggle,
+  onTurnRightToggle,
 }) {
+  const leftOn    = directionalLightsManager === 'left'  || directionalLightsManager === 'blinker';
+  const rightOn   = directionalLightsManager === 'right' || directionalLightsManager === 'blinker';
+  const hazardOn  = directionalLightsManager === 'blinker';
 
-  const getButtonLabels = () => {
-    switch (directionalLightsManager) {
-      case 'blinker':
-        return {
-          left: 'L_Blink',
-          blinker: 'Blinker ON',
-          right: 'R_Blink',
-        };
-      case 'left':
-        return {
-          left: 'LEFT_ON',
-          blinker: 'Blinker OFF',
-          right: 'RIGHT_OFF',
-        };
-      case 'right':
-        return {
-          left: 'LEFT_OFF',
-          blinker: 'Blinker OFF',
-          right: 'RIGHT_ON',
-        };
-      default:
-        return {
-          left: 'LEFT_OFF',
-          blinker: 'Blinker OFF',
-          right: 'RIGHT_OFF',
-        };
-    }
-  };
-
-  const { left, blinker, right } = getButtonLabels();
-  
-    
-    return(
-        <div style={styles.buttonContainer}>
-        <button onClick={onTurnLeftToggle} style={styles.button}>
-          {left}
+  return (
+    <div className="panel-section">
+      <div className="panel-section-title">Turn Signals</div>
+      <div className="panel-row">
+        <button
+          onClick={onTurnLeftToggle}
+          className={`panel-btn ${leftOn ? 'warn active' : ''}`}
+        >
+          ◀ LEFT
         </button>
-
-        <button onClick={blinkerActiveToggle} style={styles.button}>
-            {blinker}
+        <button
+          onClick={blinkerActiveToggle}
+          className={`panel-btn ${hazardOn ? 'warn active' : ''}`}
+        >
+          ⚠ HAZARD
         </button>
-
-        <button onClick={onTurnRightToggle} style={styles.button}>
-          {right}
+        <button
+          onClick={onTurnRightToggle}
+          className={`panel-btn ${rightOn ? 'warn active' : ''}`}
+        >
+          RIGHT ▶
         </button>
       </div>
-    )
-}
-
-const styles = {
-    buttonContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginBottom: '10px',
-      },
-      button: {
-        margin: '0 10px',
-        padding: '5px 10px',
-        cursor: 'pointer',
-      },
+    </div>
+  );
 }
 
 export default DirectionalLights;

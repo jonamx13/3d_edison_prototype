@@ -1,0 +1,332 @@
+.panel_int {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 360px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 20px 24px;
+  background:
+    linear-gradient(165deg, rgba(14, 20, 28, 0.78) 0%, rgba(6, 10, 14, 0.9) 100%);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(130, 190, 210, 0.12);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 80px rgba(95, 184, 201, 0.03),
+    0 24px 60px -12px rgba(0, 0, 0, 0.75);
+  color: #b8c4cc;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  z-index: 10;
+}
+
+/* Corner bracket top-left */
+.panel_int::before {
+  content: "";
+  position: absolute;
+  top: 6px; left: 6px;
+  width: 14px; height: 14px;
+  border-top: 1px solid rgba(140, 200, 220, 0.45);
+  border-left: 1px solid rgba(140, 200, 220, 0.45);
+  pointer-events: none;
+}
+/* Corner bracket bottom-right */
+.panel_int::after {
+  content: "";
+  position: absolute;
+  bottom: 6px; right: 6px;
+  width: 14px; height: 14px;
+  border-bottom: 1px solid rgba(140, 200, 220, 0.45);
+  border-right: 1px solid rgba(140, 200, 220, 0.45);
+  pointer-events: none;
+}
+
+/* Positioning layer — safe regardless of DigitalUI internals */
+.panels-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.panels-layer > * {
+  pointer-events: auto;
+}
+
+
+.panel_int.panel-right {
+  left: auto;
+  right: 24px;
+}
+
+/* Scrollbar */
+.panel_int::-webkit-scrollbar { width: 4px; }
+.panel_int::-webkit-scrollbar-track { background: transparent; }
+.panel_int::-webkit-scrollbar-thumb {
+  background: rgba(140, 200, 220, 0.2);
+  border-radius: 2px;
+}
+
+
+
+/* ---- Header ---- */
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(140, 200, 220, 0.1);
+  margin-bottom: -4px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #d8e3e9;
+}
+
+.panel-header::after {
+  content: "SYS · 01";
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #465966;
+}
+
+/* ---- Sections ---- */
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel-section-title {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #5f7480;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(140, 200, 220, 0.18), transparent);
+}
+
+.panel-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---- Buttons ---- */
+.panel-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 2px;
+  border: 1px solid rgba(140, 200, 220, 0.14);
+  background: rgba(140, 200, 220, 0.03);
+  color: #8b9aa3;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.panel-btn:hover:not(:disabled) {
+  background: rgba(140, 200, 220, 0.08);
+  border-color: rgba(140, 200, 220, 0.3);
+  color: #d8e3e9;
+}
+
+.panel-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.panel-btn.active {
+  background: rgba(111, 191, 208, 0.12);
+  border-color: rgba(111, 191, 208, 0.55);
+  color: #8ad7e8;
+}
+
+.panel-btn.active::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 8px; right: 8px;
+  height: 1px;
+  background: #8ad7e8;
+  box-shadow: 0 0 8px rgba(138, 215, 232, 0.7);
+}
+
+.panel-btn.warn.active {
+  background: rgba(201, 164, 74, 0.12);
+  border-color: rgba(201, 164, 74, 0.55);
+  color: #d9b86a;
+}
+.panel-btn.warn.active::before {
+  background: #d9b86a;
+  box-shadow: 0 0 8px rgba(217, 184, 106, 0.7);
+}
+
+/* ---- Sliders ---- */
+.slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-wrap input[type="range"] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  border-radius: 0;
+  background: rgba(140, 200, 220, 0.15);
+  outline: none;
+  cursor: pointer;
+}
+
+.slider-wrap input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 1px;
+  background: #6fbfd0;
+  cursor: pointer;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba(111, 191, 208, 0.8);
+  transition: box-shadow 0.15s;
+}
+
+.slider-wrap input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 16px rgba(111, 191, 208, 1);
+}
+
+.slider-wrap input[type="range"]::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 1px;
+  background: #6fbfd0;
+  cursor: pointer;
+  border: none;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba(111, 191, 208, 0.8);
+}
+
+.panel-label {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 10px;
+  color: #5f7480;
+  min-width: 16px;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.slider-value {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 11px;
+  color: #8ad7e8;
+  min-width: 52px;
+  text-align: right;
+  letter-spacing: 0;
+}
+
+/* ---- Animated pedal / wheel containers ---- */
+.anim-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 62px;
+  border: 1px solid rgba(140, 200, 220, 0.1);
+  border-radius: 2px;
+  background: rgba(140, 200, 220, 0.02);
+  flex-shrink: 0;
+}
+
+.anim-wrap.wheel {
+  width: 62px;
+  height: 62px;
+}
+
+/* ---- Doors ---- */
+.door-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.door-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(140, 200, 220, 0.14);
+  background: rgba(140, 200, 220, 0.03);
+  color: #8b9aa3;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.door-btn:hover {
+  background: rgba(140, 200, 220, 0.08);
+  border-color: rgba(140, 200, 220, 0.3);
+}
+
+.door-btn .door-state {
+  font-family: "JetBrains Mono", "Consolas", monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #465966;
+}
+
+.door-btn.open {
+  border-color: rgba(201, 120, 120, 0.5);
+  background: rgba(201, 120, 120, 0.08);
+  color: #d99090;
+}
+.door-btn.open .door-state {
+  color: #d99090;
+}
+
+/* ---- Car top view ---- */
+.car-topview {
+  display: flex;
+  justify-content: center;
+  padding: 14px 0;
+  border: 1px solid rgba(140, 200, 220, 0.1);
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(140, 200, 220, 0.02), rgba(0, 0, 0, 0.15)),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(140, 200, 220, 0.015) 3px 4px);
+}
+
+@keyframes blinkAnim {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
+}
+.blink { animation: blinkAnim 0.75s infinite; }
+

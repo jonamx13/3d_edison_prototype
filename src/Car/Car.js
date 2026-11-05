@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { Color, Mesh } from "three";
+import { CarHeadlights } from "./CarHeadlights";
 
 export function Car({
     wheelRotationSpeed,
@@ -15,10 +16,6 @@ export function Car({
         GLTFLoader,
         process.env.PUBLIC_URL + "models/edison_proto/edison_proto.gltf"
     );
-
-    // Refs for headlights to add SpotLights
-    const leftHeadlightRef = useRef();
-    const rightHeadlightRef = useRef();
 
     // Hook for the initial state of the Doors
     const [initialDoorsState, setInitialDoorsState] = useState({
@@ -35,7 +32,7 @@ export function Car({
         gltf.scene.rotation.set(0, -1.5, 0);
         gltf.scene.traverse((object) => {
             if (object instanceof Mesh) {
-                object.castShadow = true;
+                object.castShadow = false;
                 object.receiveShadow = true;
                 object.material.envMapIntensity = 20;
 
@@ -175,22 +172,11 @@ for (const [doorName, rotationValue] of Object.entries(openedDoors)) {
     return (
         <group>
             <primitive object={gltf.scene}/>
-
-            <spotLight
-                ref={leftHeadlightRef}
-                position={[1, 1, 1]}
-                angle={0.3}
-                intensity={5}
-                distance={10}
-                castShadow
-            />
-            <spotLight
-                ref={rightHeadlightRef}
-                position={[-1, 1, 1]}
-                angle={0.3}
-                intensity={5}
-                distance={10}
-                castShadow
+            <CarHeadlights
+            isOn={headLightsON}
+            isHigh={headlightsBeamHIGH}
+            steering={turningMove}
+            carGltf={gltf}
             />
         </group>
     );

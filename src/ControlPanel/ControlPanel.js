@@ -3,14 +3,14 @@ import HeadlightControl from './HeadlightControl';
 import TurningMoveControl from './TurningMoveControl';
 import DirectionalLights from './DirectionalLights';
 import Acceleration from './Acceleration';
-import OpenDoorsUI from './OpenDoorsUI';
-import '../Car/DigitalUI.css';
+import CarTopView from './CarTopView';
+import './ControlPanel.css';
 
-function ControlPanel({ 
+function ControlPanel({
   onSliderChangeSpeed,
   sliderSpeedValue,
 
-  onSliderTurnMoveChange, 
+  onSliderTurnMoveChange,
   sliderTurnMoveValue,
 
   onHeadlightToggle,
@@ -24,52 +24,75 @@ function ControlPanel({
   blinkerActiveToggle,
   onTurnRightToggle,
 
-  openDoors
+  openDoors,
+  setOpenDoors,   // <-- new: needed for the door buttons
 }) {
+  const toggleDoor = (door) =>
+    setOpenDoors((prev) => ({ ...prev, [door]: !prev[door] }));
+
+  const doors = [
+    { key: 'Front_Left',  label: 'FL' },
+    { key: 'Front_Right', label: 'FR' },
+    { key: 'Back_Left',   label: 'BL' },
+    { key: 'Back_Right',  label: 'BR' },
+  ];
+
   return (
-    <div className='panel_int'>
-        <HeadlightControl
-        onHeadlightToggle={onHeadlightToggle}
-        isON={isHeadlightON}
+    <div className="panel_int">
+      <div className="panel-header">
+        <h2>Vehicle Control</h2>
+      </div>
 
-        onBeamToggle={onBeamToggle}
-        isHIGHBeam={isBeamHIGH}
-        />
+      <CarTopView
+        isHeadlightON={isHeadlightON}
+        isBeamHIGH={isBeamHIGH}
+        directionalLightsManager={directionalLights}
+        openDoors={openDoors}
+      />
 
-        <TurningMoveControl
+      <Acceleration
+        onSliderChangingSpeed={onSliderChangeSpeed}
+        sliderSpeedAccValue={sliderSpeedValue}
+      />
+
+      <TurningMoveControl
         onSliderTurningMoveChange={onSliderTurnMoveChange}
         sliderTurningMoveValue={sliderTurnMoveValue}
-        />
+      />
 
-        <DirectionalLights
+      <HeadlightControl
+        onHeadlightToggle={onHeadlightToggle}
+        isON={isHeadlightON}
+        onBeamToggle={onBeamToggle}
+        isHIGHBeam={isBeamHIGH}
+      />
+
+      <DirectionalLights
         directionalLightsManager={directionalLights}
         onTurnLeftToggle={onTurnLeftToggle}
         blinkerActiveToggle={blinkerActiveToggle}
         onTurnRightToggle={onTurnRightToggle}
-        />
+      />
 
-        <OpenDoorsUI
-        openDoors={openDoors}
-        />
-
-        <Acceleration
-        onSliderChangingSpeed={onSliderChangeSpeed}
-        sliderSpeedAccValue={sliderSpeedValue}
-        />
+      <div className="panel-section">
+        <div className="panel-section-title">Doors</div>
+        <div className="door-grid">
+          {doors.map((d) => (
+            <button
+              key={d.key}
+              onClick={() => toggleDoor(d.key)}
+              className={`door-btn ${openDoors[d.key] ? 'open' : ''}`}
+            >
+              <span>{d.label}</span>
+              <span className="door-state">
+                {openDoors[d.key] ? 'OPEN' : 'SHUT'}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-const styles = {
-    controlPanel: {
-      margin: '10px',
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
-      padding: '10px',
-      borderRadius: '5px',
-      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
-    }
-  };
 export default ControlPanel;
